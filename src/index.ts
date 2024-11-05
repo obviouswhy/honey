@@ -10,7 +10,9 @@ app.get("/", (c) => {
 app.get("/login/callback", (c) => {
   const { req, res } = c;
   const code = req.query("code");
-  if (!code) return c.text("Code not found");
+  const error = req.query("error");
+  if (error) return c.json({ error: error });
+  if (!code) return c.json({ error: "Code not found" });
   return c.json({ code: code });
 });
 
